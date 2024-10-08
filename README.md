@@ -12,7 +12,6 @@ yarn dev
 pnpm dev
 # or
 bun dev
-更新r equirements.txt文件以包含以下依赖项：1008
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
