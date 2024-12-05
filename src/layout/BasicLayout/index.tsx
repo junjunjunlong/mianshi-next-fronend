@@ -1,21 +1,17 @@
 "use client";
+import React from "react";
+import { Dropdown, Input } from "antd";
 import {
   GithubFilled,
   LogoutOutlined,
-  PlusCircleFilled,
   SearchOutlined,
-} from '@ant-design/icons';
-import {
-  ProLayout,
-} from '@ant-design/pro-components';
-import {
-  Dropdown,
-  Input,
-} from 'antd';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import React from 'react';
-
+} from "@ant-design/icons";
+import { ProLayout } from "@ant-design/pro-components";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import Image from "next/image";
+import GlobalFooter from "@/components/globalFooter";
+import menus from "../../../config/menu";
 
 const SearchInput = () => {
   return (
@@ -23,8 +19,8 @@ const SearchInput = () => {
       key="SearchOutlined"
       aria-hidden
       style={{
-        display: 'flex',
-        alignItems: 'center',
+        display: "flex",
+        alignItems: "center",
         marginInlineEnd: 24,
       }}
       onMouseDown={(e) => {
@@ -37,17 +33,9 @@ const SearchInput = () => {
           borderRadius: 4,
           marginInlineEnd: 12,
         }}
-        prefix={
-          <SearchOutlined
-          />
-        }
+        prefix={<SearchOutlined />}
         placeholder="搜索题目"
         variant="borderless"
-      />
-      <PlusCircleFilled
-        style={{
-          fontSize: 24,
-        }}
       />
     </div>
   );
@@ -58,36 +46,45 @@ interface Props {
 }
 
 export default function BasicLayout({ children }: Props) {
-
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   return (
     <div
       id="basicLayout"
-      className='basicLayout'
+      className="basicLayout"
       style={{
-        height: '100vh',
-        overflow: 'auto',
+        height: "100vh",
+        overflow: "auto",
       }}
     >
       <ProLayout
-        layout='top'
+        layout="top"
+        title="面试匠刷题平台"
+        logo={
+          <Image
+            src="/assets/logo_1.png"
+            alt="面试匠"
+            width={32}
+            height={32}
+            style={{ marginRight: 6 }}
+          />
+        }
         location={{
-          pathname
+          pathname,
         }}
         avatarProps={{
-          src: 'https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg',
-          size: 'small',
-          title: '龙达达',
+          src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
+          size: "small",
+          title: "龙达达",
           render: (props, dom) => {
             return (
               <Dropdown
                 menu={{
                   items: [
                     {
-                      key: 'logout',
+                      key: "logout",
                       icon: <LogoutOutlined />,
-                      label: '退出登录',
+                      label: "退出登录",
                     },
                   ],
                 }}
@@ -112,45 +109,23 @@ export default function BasicLayout({ children }: Props) {
             </a>
           );
         }}
-        menuFooterRender={(props) => {
-          if (props?.collapsed) return undefined;
+        footerRender={() => {
           return (
-            <div
-              style={{
-                textAlign: 'center',
-                paddingBlockStart: 12,
-              }}
-            >
-              <div>© 2021 Made with love</div>
-              <div>by Ant Design</div>
-            </div>
+            <GlobalFooter />
           );
         }}
         onMenuHeaderClick={(e) => console.log(e)}
         // 菜单
         menuDataRender={() => {
-          return [
-            {
-              path: '/backs',
-              name: '欢迎',
-            },
-            {
-              path: '/questions',
-              name: '题目大全',
-            },
-          ]
+          return menus;
         }}
         // 菜单点击
         menuItemRender={(item, dom) => (
-          <Link
-            href={item.path || '/'}
-          >
-            {dom}
-          </Link>
+          <Link href={item.path || "/"}>{dom}</Link>
         )}
       >
         {children}
       </ProLayout>
-    </div >
+    </div>
   );
-};
+}
