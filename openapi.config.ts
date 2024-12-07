@@ -1,5 +1,4 @@
-import { generateService } from "@umijs/openapi";
-
+const { generateService } = require("@umijs/openapi");
 
 generateService({
   requestLibPath: "import request from '@/libs/request'",
