@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 
+import loginUser from "./loginUser";
+
 const store = configureStore({
   reducer: {
     // 在这里存放状态
+    loginUser
   },
 });
 

@@ -12,6 +12,8 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import GlobalFooter from "@/components/globalFooter";
 import menus from "../../../config/menu";
+import { useSelector } from "react-redux";
+import { RootState } from "@/stores/index";
 
 const SearchInput = () => {
   return (
@@ -48,6 +50,9 @@ interface Props {
 export default function BasicLayout({ children }: Props) {
   const pathname = usePathname();
 
+  const loginUser = useSelector((state: RootState) => state.loginUser);
+  console.log(loginUser, "loginUser");
+
   return (
     <div
       id="basicLayout"
@@ -73,9 +78,9 @@ export default function BasicLayout({ children }: Props) {
           pathname,
         }}
         avatarProps={{
-          src: "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
+          src: loginUser.userAvatar || "https://gw.alipayobjects.com/zos/antfincdn/efFD%24IOql2/weixintupian_20170331104822.jpg",
           size: "small",
-          title: "龙达达",
+          title: loginUser.userName || "未登录",
           render: (props, dom) => {
             return (
               <Dropdown
