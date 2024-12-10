@@ -7,7 +7,7 @@ export const Forbiddeen = () => {
   return (
     <Result
       status={403}
-      title="Sorry, you are not authorized to access this page."
+      title="对不起，你没有权限访问此页面。"
       subTitle="对不起，你没有权限访问此页面。"
       extra={[
         <Button type="primary" key="console" href='/'>

@@ -8,6 +8,7 @@ import store, { AppDispatch } from "@/stores";
 import { getLoginUserUsingGet } from "@/api/userController";
 import { setLoginUser } from "@/stores/loginUser";
 import AccessLayout from "@/access/accessLayout";
+import ACCESS_ENUM from "@/access/accessEnum";
 
 /**
  * 执行初始化逻辑的布局（多封装一层）
@@ -30,16 +31,18 @@ const InitLayout: React.FC<
     // 登录初始化处理
     const res = await getLoginUserUsingGet();
     if (res.data) {
-      const aa = {
-        userName: "未登录",
-        userProfile: "暂无简介",
-        userAvatar: "/assets/notLoginUser.png",
-        userRole: "guest",  // 角色
-      }
-      dispatch(setLoginUser(aa))
+      // 登录成功
     } else {
-      console.log("未登录");
       return;
+      setTimeout(() => {
+        const aa = {
+          userName: "测试登录",
+          userProfile: "暂无简介",
+          userAvatar: "/assets/avatar.jpg",
+          userRole: ACCESS_ENUM.ADMIN,  // 角色
+        }
+        dispatch(setLoginUser(aa))
+      }, 3000);
     }
   }, [])
 
