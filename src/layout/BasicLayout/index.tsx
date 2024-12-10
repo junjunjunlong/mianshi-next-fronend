@@ -6,7 +6,7 @@ import {
   LogoutOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { ProLayout } from "@ant-design/pro-components";
+// import { ProLayout } from "@ant-design/pro-components";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
@@ -14,6 +14,8 @@ import GlobalFooter from "@/components/globalFooter";
 import menus from "../../../config/menu";
 import { useSelector } from "react-redux";
 import { RootState } from "@/stores/index";
+import menuAccess from "@/access/menuAccess";
+import dynamic from "next/dynamic";
 
 const SearchInput = () => {
   return (
@@ -43,6 +45,10 @@ const SearchInput = () => {
   );
 };
 
+// 解决控制台警告，Warming: Prop`className` did not match.
+const ProLayout = dynamic(() => import("@ant-design/pro-components").then((mod) => mod.ProLayout), {
+  ssr: false,
+})
 interface Props {
   children: React.ReactNode;
 }
@@ -122,7 +128,7 @@ export default function BasicLayout({ children }: Props) {
         onMenuHeaderClick={(e) => console.log(e)}
         // 菜单
         menuDataRender={() => {
-          return menus;
+          return menuAccess(loginUser, menus);
         }}
         // 菜单点击
         menuItemRender={(item, dom) => (

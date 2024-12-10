@@ -9,3 +9,8 @@ body {
   max-width: 100vw;
   max-height: 100vh;
 }
+
+/* main内容布局撑开 */
+.ant-pro-layout-top {
+  height: 100%;
+}

@@ -21,12 +21,10 @@ const menus = [
     path: "https://mianshiya.com",
     // 打开新页面
     target: "_target",
-    access: ACCESS_ENUM.ADMIN,
   },
   {
     path: "/admin",
     name: "管理",
-    hideInMenu: true,
     access: ACCESS_ENUM.ADMIN,
     icon: <CrownOutlined />,
     children: [
@@ -38,6 +36,29 @@ const menus = [
     ],
   },
 ] as MenuDataItem[];
-
 // 导出
 export default menus;
+
+
+// 根据路径查找所有菜单
+export const findMenusByPath = (path: string) => {
+  return findMenuByPath(menus, path)
+}
+
+// 递归查找菜单
+export const findMenuByPath = (menus: MenuDataItem[], path: string): MenuDataItem | null => {
+  for (const menu of menus) {
+    if (menu.path === path) {
+      return menu;
+    }
+    if (menu.children) {
+      const childMenu = findMenuByPath(menu.children, path);
+      if (childMenu) {
+        return childMenu;
+      }
+    }
+  }
+  return null
+}
+
+

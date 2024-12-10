@@ -18,7 +18,7 @@ export const loginUserSlice = createSlice({
   // 初始值
   initialState: DEFAULT_USER,  
   // 修改状态
-  reducers: { 
+  reducers: {
     setLoginUser: (state, action: PayloadAction<API.LoginUserVO>) => {
       // 尽量返回新对象，避免造成污染以及不可预知的问题
       return {
