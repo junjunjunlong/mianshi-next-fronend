@@ -12,11 +12,13 @@ import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import GlobalFooter from "@/components/globalFooter";
 import menus from "../../../config/menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/stores/index";
 import menuAccess from "@/access/menuAccess";
 import dynamic from "next/dynamic";
 import { userLogoutUsingPost } from "@/api/userController";
+import { setLoginUser } from "@/stores/loginUser";
+import { DEFAULT_NOT_LOGIN_USER } from "@/access/accessEnum";
 
 const SearchInput = () => {
   return (
@@ -57,6 +59,7 @@ interface Props {
 export default function BasicLayout({ children }: Props) {
   const pathname = usePathname();
   const router = useRouter();
+  const doispatch = useDispatch();
 
   const loginUser = useSelector((state: RootState) => state.loginUser);
 
@@ -66,7 +69,8 @@ export default function BasicLayout({ children }: Props) {
         const res = await userLogoutUsingPost();
         if (res.data) {
           message.success("退出登录成功");
-          router.replace("/user/login")
+          doispatch(setLoginUser(DEFAULT_NOT_LOGIN_USER))
+          router.push("/user/login")
         }
       }
     } catch (error) {
@@ -103,6 +107,11 @@ export default function BasicLayout({ children }: Props) {
           size: "small",
           title: loginUser.userName || "未登录",
           render: (props, dom) => {
+            if (!loginUser.id) {
+              return (
+                <div onClick={() => router.push("/user/login")}>{dom}</div>
+              )
+            }
             return (
               <Dropdown
                 menu={{
