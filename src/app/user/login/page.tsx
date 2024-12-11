@@ -34,7 +34,7 @@ export default function Login() {
         form.resetFields();
       }
     } catch (e) {
-      message.error('登录失败' + (e as Error).message);
+      message.error('登录失败：' + (e as Error).message);
     }
   }
 

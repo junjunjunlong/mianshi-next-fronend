@@ -34,7 +34,7 @@ export default function Register() {
         form.resetFields();
       }
     } catch (e) {
-      message.error('登录失败' + (e as Error).message);
+      message.error('注册失败：' + (e as Error).message);
     }
   }
 

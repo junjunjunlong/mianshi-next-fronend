@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { Dropdown, Input } from "antd";
+import { Dropdown, Input, message } from "antd";
 import {
   GithubFilled,
   LogoutOutlined,
@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 // import { ProLayout } from "@ant-design/pro-components";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import GlobalFooter from "@/components/globalFooter";
 import menus from "../../../config/menu";
@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/stores/index";
 import menuAccess from "@/access/menuAccess";
 import dynamic from "next/dynamic";
+import { userLogoutUsingPost } from "@/api/userController";
 
 const SearchInput = () => {
   return (
@@ -55,9 +56,23 @@ interface Props {
 
 export default function BasicLayout({ children }: Props) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const loginUser = useSelector((state: RootState) => state.loginUser);
-  console.log(loginUser, "loginUser");
+
+  const userLogout = async ({ key }: { key: string }) => {
+    try {
+      if (key === "logout") {
+        const res = await userLogoutUsingPost();
+        if (res.data) {
+          message.success("退出登录成功");
+          router.replace("/user/login")
+        }
+      }
+    } catch (error) {
+      message.error("异常：" + (error as Error).message);
+    }
+  }
 
   return (
     <div
@@ -98,6 +113,7 @@ export default function BasicLayout({ children }: Props) {
                       label: "退出登录",
                     },
                   ],
+                  onClick: userLogout
                 }}
               >
                 {dom}
