@@ -14,3 +14,9 @@ body {
 .ant-pro-layout-top {
   height: 100%;
 }
+
+/* 限制最大宽度1200像素 */
+.max-width-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}

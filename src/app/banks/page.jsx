@@ -1,18 +1,36 @@
+"use server";
 import React from 'react';
-// import { Button, } from 'antd';
-// import { SearchOutlined } from '@ant-design/icons';
-import styles from "./index.css";
+import { Flex, message } from 'antd';
 
-export default function backs() {
+import Title from 'antd/es/typography/Title';
+import './index.scss'
+import QuestionBackListCom from '@/components/QuestionBackList';
+import { listQuestionBankVoByPageUsingPost } from '@/api/questionBankController';
+
+
+
+export default async function Banks() {
+  const pageSize= 200;
+  let questionBackList = []
+  let questionBackCardLoading = true
+  try {
+    const questionBackListRes = await listQuestionBankVoByPageUsingPost({
+      pageSize,
+      sortField: 'createTime',
+      sortOrder: 'desc',
+    })
+    questionBackList = questionBackListRes.data.records ?? []
+    questionBackCardLoading = false
+  } catch (error) {
+    message.error('获取题库列表失败:' + error.message)
+  }
+
   return (
-    <div className={styles.backs}>
-      <main className={styles.main}>
-       你好，这是back页面
-
-      </main>
-      <footer className={styles.footer}>
-
-      </footer>
+    <div className='banks-contant max-width-container'>
+      <Flex className='flex-box' justify='space-between' align='center'>
+        <Title level={3}>题库大全</Title>
+      </Flex>
+        <QuestionBackListCom questionBackList={questionBackList} cardLoading={questionBackCardLoading} />
     </div>
   );
 }

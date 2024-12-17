@@ -2,7 +2,7 @@
 
 /* 题库components */
 import React from 'react';
-import { Card, Avatar, List } from 'antd';
+import { Card, Avatar, List, Typography } from 'antd';
 // import { SearchOutlined } from '@ant-design/icons';
 import "./index.scss";
 import Link from 'next/link';
@@ -25,13 +25,21 @@ export default function QuestionBackList(props: Props) {
         dataSource={questionBackList as any[]}
         renderItem={(item) => (
           <List.Item>
-            <Card loading={cardLoading} style={{ minWidth: 300 }}>
+            <Card loading={cardLoading}>
               <Card.Meta
                 avatar={<Avatar src={item.picture} />}
                 title={
                   <Link href={`/banks/${item.id}`}>{item.title}</Link>
                 }
-                description={item.description}
+                description={
+                  <Typography.Paragraph
+                    ellipsis={{ rows: 1 }}
+                    type='secondary'
+                    style={{ marginBottom: 0 }}
+                  >
+                    {item.description}
+                  </Typography.Paragraph>
+                }
               />
             </Card>
           </List.Item>

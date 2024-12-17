@@ -1,3 +1,4 @@
+"use server";
 import React from 'react';
 import { Flex, message } from 'antd';
 
@@ -43,7 +44,7 @@ export default async function HomePage() {
 
 
   return (
-    <div id='root-home'>
+    <div id='root-home' className='max-width-container'>
       <Flex className='flex-box' justify='space-between' align='center'>
         <Title level={3}>题库</Title>
         <Link href='/questionBank'>更多</Link>
